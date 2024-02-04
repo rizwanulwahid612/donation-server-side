@@ -72,53 +72,170 @@ const getAllInventoryProducts = (filters, paginationOptions) => __awaiter(void 0
     };
 });
 const addSingleEnventoryProduct = (id, userInfo) => __awaiter(void 0, void 0, void 0, function* () {
-    // Find the booking by ID
-    const Product = yield products_model_1.Products.findOne({ _id: new mongoose_1.Types.ObjectId(id) });
-    console.log('product:', Product);
-    if (Product) {
-        const newProduct = {
-            userInfo,
-            image: Product.image,
-            name: Product.name,
-            price: Product.price,
-            occation: Product.occation,
-            recipient: Product.recipient,
-            category: Product.category,
-            theme: Product.theme,
-            brand: Product.brand,
-            color: Product.color,
-            quantity: 1,
-        };
-        const existingAddInventoryProducts = yield addIntoInventory_model_1.InventoryProducts.findOne({
-            name: newProduct === null || newProduct === void 0 ? void 0 : newProduct.name,
+    // Find the product by ID
+    const product = yield products_model_1.Products.findOne({ _id: new mongoose_1.Types.ObjectId(id) });
+    if (product) {
+        const existingProduct = yield addIntoInventory_model_1.InventoryProducts.findOne({
+            'userInfo.userEmail': userInfo.userEmail,
+            name: product.name,
         });
-        if (existingAddInventoryProducts) {
-            const newExistProduct = {
-                userInfo: existingAddInventoryProducts.userInfo,
-                image: existingAddInventoryProducts.image,
-                name: existingAddInventoryProducts.name,
-                price: existingAddInventoryProducts.price,
-                occation: existingAddInventoryProducts.occation,
-                recipient: existingAddInventoryProducts.recipient,
-                category: existingAddInventoryProducts.category,
-                theme: existingAddInventoryProducts.theme,
-                brand: existingAddInventoryProducts.brand,
-                color: existingAddInventoryProducts.color,
-                quantity: existingAddInventoryProducts.quantity + 1,
-            };
-            const result = yield addIntoInventory_model_1.InventoryProducts.findOneAndUpdate({ name: newProduct === null || newProduct === void 0 ? void 0 : newProduct.name }, newExistProduct, {
-                new: true,
-            });
-            console.log('result:', result);
+        if (existingProduct) {
+            // Product already exists, update quantity
+            const updatedProduct = Object.assign(Object.assign({}, existingProduct.toObject()), { quantity: existingProduct.quantity + 1 });
+            const result = yield addIntoInventory_model_1.InventoryProducts.findOneAndUpdate({ _id: existingProduct._id }, updatedProduct, { new: true });
+            console.log('Updated product:', result);
             return result;
         }
         else {
+            // Product doesn't exist, add a new one
+            const newProduct = {
+                userInfo,
+                image: product.image,
+                name: product.name,
+                price: product.price,
+                occation: product.occation,
+                recipient: product.recipient,
+                category: product.category,
+                theme: product.theme,
+                brand: product.brand,
+                color: product.color,
+                quantity: 1,
+            };
             const result = yield addIntoInventory_model_1.InventoryProducts.create(newProduct);
+            console.log('Added new product:', result);
             return result;
         }
     }
-    return Product;
+    return null; // Product not found
 });
+const deleteAllEnventoryProduct = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield addIntoInventory_model_1.InventoryProducts.deleteMany();
+});
+// const addSingleEnventoryProduct = async (
+//   id: string,
+//   userInfo: IUserInfo,
+// ): Promise<any> => {
+//   // Find the booking by ID
+//   const Product = await Products.findOne({ _id: new Types.ObjectId(id) });
+//   //console.log('product:', Product);
+//   if (Product) {
+//     const newProduct = {
+//       userInfo,
+//       image: Product.image,
+//       name: Product.name,
+//       price: Product.price,
+//       occation: Product.occation,
+//       recipient: Product.recipient,
+//       category: Product.category,
+//       theme: Product.theme,
+//       brand: Product.brand,
+//       color: Product.color,
+//       quantity: 1,
+//     };
+//     const existingAddInventoryProducts = await InventoryProducts.findOne({
+//       name: newProduct?.name,
+//     });
+//     console.log(existingAddInventoryProducts?.name);
+//     if (
+//       existingAddInventoryProducts?.userInfo?.userEmail ===
+//         newProduct?.userInfo?.userEmail &&
+//       existingAddInventoryProducts?.name === newProduct?.name
+//     ) {
+//       const newExistProduct = {
+//         userInfo: existingAddInventoryProducts.userInfo,
+//         image: existingAddInventoryProducts.image,
+//         name: existingAddInventoryProducts.name,
+//         price: existingAddInventoryProducts.price,
+//         occation: existingAddInventoryProducts.occation,
+//         recipient: existingAddInventoryProducts.recipient,
+//         category: existingAddInventoryProducts.category,
+//         theme: existingAddInventoryProducts.theme,
+//         brand: existingAddInventoryProducts.brand,
+//         color: existingAddInventoryProducts.color,
+//         quantity: existingAddInventoryProducts.quantity! + 1,
+//       };
+//       //if(){}
+//       const result = await InventoryProducts.findOneAndUpdate(
+//         { name: existingAddInventoryProducts?.name },
+//         newExistProduct as any,
+//         {
+//           new: true,
+//         },
+//       );
+//       console.log('result:', result);
+//       return result;
+//     }
+//     if (
+//       (existingAddInventoryProducts?.name !== newProduct.name &&
+//         existingAddInventoryProducts?.userInfo.userEmail !==
+//           newProduct.userInfo.userEmail) ||
+//       (existingAddInventoryProducts?.name !== newProduct.name &&
+//         existingAddInventoryProducts?.userInfo?.userEmail ===
+//           newProduct?.userInfo?.userEmail) ||
+//       (existingAddInventoryProducts?.name === newProduct.name &&
+//         existingAddInventoryProducts?.userInfo.userEmail !==
+//           newProduct.userInfo.userEmail)
+//     ) {
+//       const result = await InventoryProducts.create(newProduct);
+//       console.log(result);
+//       return result;
+//     }
+//   }
+//   return Product;
+// };
+// const addSingleEnventoryProduct = async (
+//   id: string,
+//   userInfo: IUserInfo,
+// ): Promise<any> => {
+//   try {
+//     const product = await Products.findOne({ _id: new Types.ObjectId(id) });
+//     if (product) {
+//       const newProduct = {
+//         userInfo,
+//         image: product.image,
+//         name: product.name,
+//         price: product.price,
+//         occation: product.occation,
+//         recipient: product.recipient,
+//         category: product.category,
+//         theme: product.theme,
+//         brand: product.brand,
+//         color: product.color,
+//         quantity: 1,
+//       };
+//       const existingInventoryProduct = await InventoryProducts.findOne({
+//         name: newProduct?.name,
+//         'userInfo.userEmail': newProduct?.userInfo?.userEmail,
+//       });
+//       if (existingInventoryProduct) {
+//         // Check if userEmail remains the same
+//         if (
+//           existingInventoryProduct.userInfo.userEmail === userInfo.userEmail
+//         ) {
+//           const updatedProduct = {
+//             ...existingInventoryProduct.toObject(),
+//             quantity: existingInventoryProduct.quantity! + 1,
+//           };
+//           const result = await InventoryProducts.findOneAndUpdate(
+//             { name: existingInventoryProduct.name },
+//             updatedProduct,
+//             { new: true },
+//           );
+//           console.log('result:', result);
+//           return result;
+//         }
+//       } else {
+//         const result = await InventoryProducts.create(newProduct);
+//         console.log(result);
+//         return result;
+//       }
+//     }
+//     return product;
+//   } catch (error) {
+//     console.error('Error adding inventory product:', error);
+//     throw error; // Handle or log the error as needed
+//   }
+// };
 const getSingleEnventoryProduct = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield addIntoInventory_model_1.InventoryProducts.findOne({ _id: id });
     return result;
@@ -132,9 +249,6 @@ const updateSingleEnventoryProduct = (id, payload) => __awaiter(void 0, void 0, 
 const deleteSingleEnventoryProduct = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const service = yield addIntoInventory_model_1.InventoryProducts.findOneAndDelete({ _id: id });
     return service;
-});
-const deleteAllEnventoryProduct = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield addIntoInventory_model_1.InventoryProducts.deleteMany();
 });
 exports.InventoryProductsService = {
     getAllInventoryProducts,

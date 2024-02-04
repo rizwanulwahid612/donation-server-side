@@ -83,73 +83,105 @@ const addSingleSellProduct = (id, dataInven) => __awaiter(void 0, void 0, void 0
         yield addIntoInventory_model_1.InventoryProducts.findOneAndDelete({ _id: id });
     }
     if (SellInventoryProduct) {
-        const InventoryProduct = {
-            userInfo: SellInventoryProduct.userInfo,
-            image: SellInventoryProduct.image,
+        const existingProduct = yield sellProduct_model_1.SellProducts.findOne({
+            'userInfo.userEmail': SellInventoryProduct.userInfo.userEmail,
             name: SellInventoryProduct.name,
-            price: SellInventoryProduct.price,
-            occation: SellInventoryProduct.occation,
-            recipient: SellInventoryProduct.recipient,
-            category: SellInventoryProduct.category,
-            theme: SellInventoryProduct.theme,
-            brand: SellInventoryProduct.brand,
-            color: SellInventoryProduct.color,
-            quantity: SellInventoryProduct.quantity - 1,
-        };
-        const newProduct = {
-            userInfo: SellInventoryProduct.userInfo,
-            image: SellInventoryProduct.image,
-            name: SellInventoryProduct.name,
-            price: SellInventoryProduct.price,
-            occation: SellInventoryProduct.occation,
-            recipient: SellInventoryProduct.recipient,
-            category: SellInventoryProduct.category,
-            theme: SellInventoryProduct.theme,
-            brand: SellInventoryProduct.brand,
-            color: SellInventoryProduct.color,
-            quantity: 1,
-        };
-        console.log('newProducts:', newProduct);
-        // const newInvenData = {
-        //   dataInven,
-        //   quantity: 1,
-        // };
-        //console.log('newInvalidate:', newInvenData);
-        const existingSellProducts = yield sellProduct_model_1.SellProducts.findOne({
-            name: newProduct === null || newProduct === void 0 ? void 0 : newProduct.name,
         });
-        if (existingSellProducts) {
-            const newExistProduct = {
-                userInfo: existingSellProducts.userInfo,
-                image: existingSellProducts.image,
-                name: existingSellProducts.name,
-                price: existingSellProducts.price,
-                occation: existingSellProducts.occation,
-                recipient: existingSellProducts.recipient,
-                category: existingSellProducts.category,
-                theme: existingSellProducts.theme,
-                brand: existingSellProducts.brand,
-                color: existingSellProducts.color,
-                quantity: existingSellProducts.quantity + 1,
-            };
-            const result = yield sellProduct_model_1.SellProducts.findOneAndUpdate({ name: newProduct === null || newProduct === void 0 ? void 0 : newProduct.name }, newExistProduct, {
-                new: true,
-            });
-            yield addIntoInventory_model_1.InventoryProducts.findOneAndUpdate({ name: InventoryProduct === null || InventoryProduct === void 0 ? void 0 : InventoryProduct.name }, InventoryProduct, {
-                new: true,
-            });
-            console.log('result:', result);
+        const updated2 = Object.assign(Object.assign({}, SellInventoryProduct === null || SellInventoryProduct === void 0 ? void 0 : SellInventoryProduct.toObject()), { quantity: SellInventoryProduct.quantity - 1 });
+        if (existingProduct) {
+            // Product already exists, update quantity
+            const updatedProduct = Object.assign(Object.assign({}, existingProduct.toObject()), { quantity: existingProduct.quantity + 1 });
+            const result = yield sellProduct_model_1.SellProducts.findOneAndUpdate({ _id: existingProduct._id }, updatedProduct, { new: true });
+            yield addIntoInventory_model_1.InventoryProducts.findOneAndUpdate({ _id: SellInventoryProduct._id }, updated2, { new: true });
+            console.log('Updated product:', result);
             return result;
         }
         else {
             const result = yield sellProduct_model_1.SellProducts.create(dataInven);
-            yield addIntoInventory_model_1.InventoryProducts.findOneAndUpdate({ name: InventoryProduct === null || InventoryProduct === void 0 ? void 0 : InventoryProduct.name }, InventoryProduct, {
-                new: true,
-            });
+            console.log('Added new Sell product:', result);
+            yield addIntoInventory_model_1.InventoryProducts.findOneAndUpdate({ _id: SellInventoryProduct._id }, updated2, { new: true });
             return result;
         }
     }
-    return SellInventoryProduct;
+    // if (SellInventoryProduct) {
+    //   const InventoryProduct = {
+    //     userInfo: SellInventoryProduct.userInfo,
+    //     image: SellInventoryProduct.image,
+    //     name: SellInventoryProduct.name,
+    //     price: SellInventoryProduct.price,
+    //     occation: SellInventoryProduct.occation,
+    //     recipient: SellInventoryProduct.recipient,
+    //     category: SellInventoryProduct.category,
+    //     theme: SellInventoryProduct.theme,
+    //     brand: SellInventoryProduct.brand,
+    //     color: SellInventoryProduct.color,
+    //     quantity: SellInventoryProduct.quantity! - 1,
+    //   };
+    //   const newProduct = {
+    //     userInfo: SellInventoryProduct.userInfo,
+    //     image: SellInventoryProduct.image,
+    //     name: SellInventoryProduct.name,
+    //     price: SellInventoryProduct.price,
+    //     occation: SellInventoryProduct.occation,
+    //     recipient: SellInventoryProduct.recipient,
+    //     category: SellInventoryProduct.category,
+    //     theme: SellInventoryProduct.theme,
+    //     brand: SellInventoryProduct.brand,
+    //     color: SellInventoryProduct.color,
+    //     quantity: 1,
+    //   };
+    //   console.log('newProducts:', newProduct);
+    //   // const newInvenData = {
+    //   //   dataInven,
+    //   //   quantity: 1,
+    //   // };
+    //   //console.log('newInvalidate:', newInvenData);
+    //   const existingSellProducts = await SellProducts.findOne({
+    //     name: newProduct?.name,
+    //   });
+    //   if (existingSellProducts) {
+    //     const newExistProduct = {
+    //       userInfo: existingSellProducts.userInfo,
+    //       image: existingSellProducts.image,
+    //       name: existingSellProducts.name,
+    //       price: existingSellProducts.price,
+    //       occation: existingSellProducts.occation,
+    //       recipient: existingSellProducts.recipient,
+    //       category: existingSellProducts.category,
+    //       theme: existingSellProducts.theme,
+    //       brand: existingSellProducts.brand,
+    //       color: existingSellProducts.color,
+    //       quantity: existingSellProducts.quantity! + 1,
+    //     };
+    //     const result = await SellProducts.findOneAndUpdate(
+    //       { name: newProduct?.name },
+    //       newExistProduct as any,
+    //       {
+    //         new: true,
+    //       },
+    //     );
+    //     await InventoryProducts.findOneAndUpdate(
+    //       { name: InventoryProduct?.name },
+    //       InventoryProduct as any,
+    //       {
+    //         new: true,
+    //       },
+    //     );
+    //     console.log('result:', result);
+    //     return result;
+    //   } else {
+    //     const result = await SellProducts.create(dataInven);
+    //     await InventoryProducts.findOneAndUpdate(
+    //       { name: InventoryProduct?.name },
+    //       InventoryProduct as any,
+    //       {
+    //         new: true,
+    //       },
+    //     );
+    //     return result;
+    //   }
+    // }
+    // return SellInventoryProduct;
 });
 const addSingleDuplicateProduct = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
     // Find the booking by ID
