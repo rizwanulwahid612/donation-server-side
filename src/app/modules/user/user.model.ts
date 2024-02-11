@@ -17,16 +17,16 @@ const UserSchema = new Schema<IUser, UserModel>(
     },
     email: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
     },
     name: {
       type: String,
-      required: true,
+      // required: true,
     },
     image: {
       type: String,
-      required: true,
+      // required: true,
     },
     password: {
       type: String,

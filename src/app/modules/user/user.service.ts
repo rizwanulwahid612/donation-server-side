@@ -9,7 +9,7 @@ import ApiError from '../../../errors/ApiError';
 
 import { IUser } from './user.interface';
 import { User } from './user.model';
-import { generateUserId } from './user.utils';
+import { generateAdminId, generateUserId } from './user.utils';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { IGenericResponse } from '../../../interfaces/common';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
@@ -39,6 +39,7 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
     if (!newUser.length) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user');
     }
+
     newUserAllData = newUser[0]._id;
 
     await session.commitTransaction();
@@ -51,6 +52,7 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
   if (newUserAllData) {
     newUserAllData = await User.findOne({ email: newUserAllData.id });
   }
+
   return newUserAllData;
 };
 const getAllUsers = async (
@@ -112,7 +114,46 @@ const getAllUsers = async (
     data: result,
   };
 };
+const createAdmin = async (admin: IUser): Promise<IUser | null> => {
+  if (!admin) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Admin data is missing');
+  }
+  if (!admin.password) {
+    admin.password = config.default_user_pass as string;
+  }
+  admin.role = 'admin';
+
+  // generate admin id
+  let newUserAllData = null;
+  const session = await mongoose.startSession();
+  try {
+    session.startTransaction();
+
+    const id = await generateAdminId();
+    admin.id = id;
+
+    const newUser = await User.create([admin], { session });
+
+    if (!newUser.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create Admin');
+    }
+    newUserAllData = newUser[0]._id;
+
+    await session.commitTransaction();
+    await session.endSession();
+  } catch (error) {
+    await session.abortTransaction();
+    await session.endSession();
+    throw error;
+  }
+  if (newUserAllData) {
+    newUserAllData = await User.findOne({ email: newUserAllData.id });
+  }
+  return newUserAllData;
+};
+
 export const UserService = {
   createUser,
   getAllUsers,
+  createAdmin,
 };

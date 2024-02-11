@@ -1,5 +1,6 @@
 import express from 'express';
-import { ProductsController } from './products.controller';
+//import { DonationsController } from './donations.controller';
+import { PostDonationsController } from './postDonate.controller';
 //import { ENUM_USER_ROLE } from '../../../enums/user';
 //import auth from '../../middlewares/auth';
 //import validateRequest from '../../middlewares/validateRequest';
@@ -9,12 +10,12 @@ import { ProductsController } from './products.controller';
 // import { ServiceValidation } from './service.validation';
 
 const router = express.Router();
-// router.post(
-//   '/create-category',
-//  // validateRequest(CategoryValidation.postCategory),
-//   // auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
-//   CategoryController.createCategory,
-// );
+router.post(
+  '/:id',
+  // validateRequest(CategoryValidation.postCategory),
+  // auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  PostDonationsController.addSinglePostDonation,
+);
 // router.get(
 //   '/:id',
 //   // auth(
@@ -22,7 +23,7 @@ const router = express.Router();
 //   //   ENUM_USER_ROLE.ADMIN,
 //   //   ENUM_USER_ROLE.CUSTOMER,
 //   // ),
-//   ProductsController.getSingleCategory,
+//   DonationsController.getSingleDonation,
 // );
 router.get(
   '/',
@@ -31,20 +32,20 @@ router.get(
   //   ENUM_USER_ROLE.ADMIN,
   //   ENUM_USER_ROLE.CUSTOMER,
   // ),
-  ProductsController.getAllProducts,
+  PostDonationsController.getAllPostDonations,
 );
 
 // router.patch(
 //   '/:id',
-//   validateRequest(CategoryValidation.updateCategory),
-//   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
-//   CategoryController.updateCategory,
+//   // validateRequest(CategoryValidation.updateCategory),
+//   // auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+//   DonationsController.updateDonation,
 // );
 
 // router.delete(
 //   '/:id',
-//   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
-//   CategoryController.deleteCategory,
+//   //auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+//   DonationsController.deleteDonation,
 // );
 
-export const ProductsRoutes = router;
+export const PostDonationsRoutes = router;

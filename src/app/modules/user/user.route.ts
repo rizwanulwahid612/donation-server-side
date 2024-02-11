@@ -14,6 +14,12 @@ router.post(
   //auth(ENUM_USER_ROLE.USER),
   UserController.createUser,
 );
+router.post(
+  '/create-admin',
+  //validateRequest(UserValidation.createUserZodSchema),
+  //auth(ENUM_USER_ROLE.USER),
+  UserController.createAdmin,
+);
 router.get(
   '/',
   //auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),

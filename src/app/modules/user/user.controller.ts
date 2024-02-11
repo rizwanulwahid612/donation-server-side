@@ -24,6 +24,19 @@ const createUser: RequestHandler = catchAsync(
     });
   },
 );
+const createAdmin: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { ...user } = req.body;
+    const result = await UserService.createAdmin(user);
+
+    sendResponse<IUser>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Admin created successfully!',
+      data: result,
+    });
+  },
+);
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, userFilterableFields);
   const paginationOptions = pick(req.query, paginationFields);
@@ -40,5 +53,6 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
 });
 export const UserController = {
   createUser,
+  createAdmin,
   getAllUsers,
 };

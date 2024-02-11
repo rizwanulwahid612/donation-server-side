@@ -2,3 +2,6 @@
 export enum ENUM_USER_ROLE {
   USER = 'user',
 }
+export enum ENUM_USER_ROLE {
+  ADMIN = 'admin',
+}
