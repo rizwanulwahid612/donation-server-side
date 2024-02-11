@@ -8,11 +8,11 @@ import cookieParser from 'cookie-parser';
 //import config from './config';
 
 const app: Application = express();
-const corsOptions = {
-  origin: true,
-  credentials: true,
-};
-app.use('*', cors(corsOptions));
+// const corsOptions = {
+//   origin: true,
+//   credentials: true,
+// };
+app.use(cors({ origin: ['http://localhost:3000'] }));
 app.use(cookieParser());
 
 // app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
@@ -35,7 +35,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     errorMessages: [
       {
         path: req.originalUrl,
-        message: 'API Not Found',
+        message: 'API Not Found NOW',
       },
     ],
   });
