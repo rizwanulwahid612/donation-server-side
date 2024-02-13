@@ -1,64 +1,70 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.InventoryProducts = void 0;
-const mongoose_1 = require("mongoose");
-const InventoryProductsSchema = new mongoose_1.Schema({
+const mongoose_1 = require('mongoose');
+const InventoryProductsSchema = new mongoose_1.Schema(
+  {
     userInfo: {
-        type: {
-            userName: {
-                type: String,
-                required: false,
-            },
-            userEmail: {
-                type: String,
-                required: false,
-            },
-            userImage: {
-                type: String,
-                required: false,
-            },
+      type: {
+        userName: {
+          type: String,
+          required: false,
         },
-        required: false,
+        userEmail: {
+          type: String,
+          required: false,
+        },
+        userImage: {
+          type: String,
+          required: false,
+        },
+      },
+      required: false,
     },
     image: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     name: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     price: {
-        type: String,
+      type: String,
     },
     occation: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     recipient: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     category: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     theme: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     brand: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     color: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     quantity: {
-        type: Number,
+      type: Number,
     },
-}, {
+  },
+  {
     timestamps: true,
-});
-exports.InventoryProducts = (0, mongoose_1.model)('InventoryProducts', InventoryProductsSchema);
+  },
+);
+exports.InventoryProducts = (0, mongoose_1.model)(
+  'InventoryProducts',
+  InventoryProductsSchema,
+);
