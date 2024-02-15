@@ -1,7 +1,6 @@
       
 admin email: admin2@gmail.com
 adminPass: 123456
- I am sharing video project: https://screenrec.com/share/O0Wehzi42c 
 project videolink: https://screenrec.com/share/4bCHedyBXn
 project backend link: https://donation-server-opal.vercel.app/api/v1/users
 project frontendlink: https://donation-frontend-alpha.vercel.app/login
