@@ -1,7 +1,10 @@
  I am sharing video project: https://screenrec.com/share/O0Wehzi42c       
-.....i am gatting cors error. backend i was using mongoose.   
-server side deploy: https://server-8mukux2jl-rizwanulwahid612-gmailcom.vercel.app/api/v1/users
-client side deploy: https://gift-shop-management-3ommtb4qx-rizwanulwahid612-gmailcom.vercel.app/login
+admin email: admin2@gmail.com
+adminPass: 123456
+project videolink: https://screenrec.com/share/4bCHedyBXn
+project backend link: https://donation-server-opal.vercel.app/api/v1/users
+project frontendlink: https://donation-frontend-alpha.vercel.app/login
+
 githublink client: https://github.com/Porgramming-Hero-web-course/l2b2-full-stack-a5-client-side-rizwanulwahid612/tree/main
 githublink server:  https://github.com/Porgramming-Hero-web-course/l2b2-full-stack-a5-server-side-rizwanulwahid612/tree/main
 
