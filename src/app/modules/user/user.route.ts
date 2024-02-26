@@ -7,7 +7,18 @@ import { UserController } from './user.controller';
 //import { ENUM_USER_ROLE } from '../../../enums/user';
 //import auth from '../../middlewares/auth';
 const router = express.Router();
-
+router.post(
+  '/create-contact',
+  //validateRequest(UserValidation.createUserZodSchema),
+  //auth(ENUM_USER_ROLE.USER),
+  UserController.createContact,
+);
+router.post(
+  '/create-link-for-user',
+  //validateRequest(UserValidation.createUserZodSchema),
+  //auth(ENUM_USER_ROLE.USER),
+  UserController.createlinkforUser,
+);
 router.post(
   '/create-user',
   //validateRequest(UserValidation.createUserZodSchema),

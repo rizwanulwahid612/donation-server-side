@@ -14,7 +14,43 @@ import { IPaginationOptions } from '../../../interfaces/pagination';
 import { IGenericResponse } from '../../../interfaces/common';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { userSearchableFields } from './user.constant';
-//import { generateAdminId } from './user.utils';
+import { sendEmail } from '../auth/sendResetMail';
+
+type IContact = {
+  name: string;
+  email: string;
+  description: string;
+};
+const createContact = async (contact: IContact) => {
+  await sendEmail(
+    contact.email,
+    `
+      <div>
+        <p>User Name, ${contact.name}</p>
+        <p>Userr Mail, ${contact.email}</p>
+        <p>Description:, ${contact.description}</p>
+        <p>Thank you</p>
+      </div>
+  `,
+  );
+};
+const createlinkforUser = async (user: IUser) => {
+  const resetLink: string =
+    config.resetlink +
+    `/register?email=${user.email}&image=${user.image}&name=${user.name}&password=${user.password}`;
+
+  console.log('resetLink:', resetLink);
+  await sendEmail(
+    user.email,
+    `
+      <div>
+        <p>Hi, ${user.name}</p>
+        <p>Varification link: <a href=${resetLink}>Click Here</a></p>
+        <p>Thank you</p>
+      </div>
+  `,
+  );
+};
 
 const createUser = async (user: IUser): Promise<IUser | null> => {
   if (!user) {
@@ -153,6 +189,8 @@ const createAdmin = async (admin: IUser): Promise<IUser | null> => {
 };
 
 export const UserService = {
+  createlinkforUser,
+  createContact,
   createUser,
   getAllUsers,
   createAdmin,

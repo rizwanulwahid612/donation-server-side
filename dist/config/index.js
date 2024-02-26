@@ -14,6 +14,7 @@ exports.default = {
     frontend_url: process.env.FRONTEND_URL,
     database_url: process.env.DATABASE_URL,
     default_user_pass: process.env.DEFAULT_USER_PASS,
+    default_admin_pass: process.env.DEFAULT_ADMIN_PASS,
     bycrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
     jwt: {
         secret: process.env.JWT_SECRET,
@@ -21,4 +22,7 @@ exports.default = {
         expires_in: process.env.JWT_EXPIRES_IN,
         refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
     },
+    resetlink: process.env.RESET_PASS_UI_LINK,
+    email: process.env.EMAIL,
+    appPass: process.env.APP_PASS,
 };

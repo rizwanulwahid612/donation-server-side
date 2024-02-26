@@ -31,6 +31,24 @@ const user_service_1 = require("./user.service");
 const pick_1 = __importDefault(require("../../../shared/pick"));
 const user_constant_1 = require("./user.constant");
 const pagination_1 = require("../../../constants/pagination");
+const createContact = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const contact = __rest(req.body, []);
+    yield user_service_1.UserService.createContact(contact);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Check your email!',
+    });
+}));
+const createlinkforUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = __rest(req.body, []);
+    yield user_service_1.UserService.createlinkforUser(user);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Check your email!',
+    });
+}));
 const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = __rest(req.body, []);
     const result = yield user_service_1.UserService.createUser(user);
@@ -65,6 +83,8 @@ const getAllUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
     });
 }));
 exports.UserController = {
+    createContact,
+    createlinkforUser,
     createUser,
     createAdmin,
     getAllUsers,

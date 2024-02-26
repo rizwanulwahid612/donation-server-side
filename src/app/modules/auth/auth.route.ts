@@ -24,5 +24,7 @@ router.post(
   //auth(ENUM_USER_ROLE.ADMIN),
   AuthController.changePassword,
 );
+router.post('/forgot-password', AuthController.forgotPass);
 
+router.post('/reset-password', AuthController.resetPassword);
 export const AuthRoutes = router;

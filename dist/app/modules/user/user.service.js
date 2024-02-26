@@ -34,7 +34,29 @@ const user_model_1 = require("./user.model");
 const user_utils_1 = require("./user.utils");
 const paginationHelper_1 = require("../../../helpers/paginationHelper");
 const user_constant_1 = require("./user.constant");
-//import { generateAdminId } from './user.utils';
+const sendResetMail_1 = require("../auth/sendResetMail");
+const createContact = (contact) => __awaiter(void 0, void 0, void 0, function* () {
+    yield (0, sendResetMail_1.sendEmail)(contact.email, `
+      <div>
+        <p>User Name, ${contact.name}</p>
+        <p>Userr Mail, ${contact.email}</p>
+        <p>Description:, ${contact.description}</p>
+        <p>Thank you</p>
+      </div>
+  `);
+});
+const createlinkforUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
+    const resetLink = index_1.default.resetlink +
+        `/register?email=${user.email}&image=${user.image}&name=${user.name}&password=${user.password}`;
+    console.log('resetLink:', resetLink);
+    yield (0, sendResetMail_1.sendEmail)(user.email, `
+      <div>
+        <p>Hi, ${user.name}</p>
+        <p>Varification link: <a href=${resetLink}>Click Here</a></p>
+        <p>Thank you</p>
+      </div>
+  `);
+});
 const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     if (!user) {
         throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'User data is missing');
@@ -148,6 +170,8 @@ const createAdmin = (admin) => __awaiter(void 0, void 0, void 0, function* () {
     return newUserAllData;
 });
 exports.UserService = {
+    createlinkforUser,
+    createContact,
     createUser,
     getAllUsers,
     createAdmin,

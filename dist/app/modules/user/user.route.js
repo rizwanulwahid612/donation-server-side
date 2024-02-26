@@ -13,6 +13,14 @@ const user_controller_1 = require("./user.controller");
 //import { ENUM_USER_ROLE } from '../../../enums/user';
 //import auth from '../../middlewares/auth';
 const router = express_1.default.Router();
+router.post('/create-contact', 
+//validateRequest(UserValidation.createUserZodSchema),
+//auth(ENUM_USER_ROLE.USER),
+user_controller_1.UserController.createContact);
+router.post('/create-link-for-user', 
+//validateRequest(UserValidation.createUserZodSchema),
+//auth(ENUM_USER_ROLE.USER),
+user_controller_1.UserController.createlinkforUser);
 router.post('/create-user', 
 //validateRequest(UserValidation.createUserZodSchema),
 //auth(ENUM_USER_ROLE.USER),

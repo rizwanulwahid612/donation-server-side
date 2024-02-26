@@ -11,6 +11,27 @@ import pick from '../../../shared/pick';
 import { userFilterableFields } from './user.constant';
 import { paginationFields } from '../../../constants/pagination';
 
+const createContact = catchAsync(async (req: Request, res: Response) => {
+  const { ...contact } = req.body;
+  await UserService.createContact(contact);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Check your email!',
+  });
+});
+const createlinkforUser = catchAsync(async (req: Request, res: Response) => {
+  const { ...user } = req.body;
+  await UserService.createlinkforUser(user);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Check your email!',
+  });
+});
+
 const createUser: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const { ...user } = req.body;
@@ -52,6 +73,8 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 export const UserController = {
+  createContact,
+  createlinkforUser,
   createUser,
   createAdmin,
   getAllUsers,

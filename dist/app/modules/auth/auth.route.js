@@ -21,4 +21,6 @@ router.post('/change-password',
 //validateRequest(AuthValidation.changePasswordZodSchema),
 //auth(ENUM_USER_ROLE.ADMIN),
 auth_controller_1.AuthController.changePassword);
+router.post('/forgot-password', auth_controller_1.AuthController.forgotPass);
+router.post('/reset-password', auth_controller_1.AuthController.resetPassword);
 exports.AuthRoutes = router;
