@@ -31,9 +31,6 @@ const pick_1 = __importDefault(require("../../../shared/pick"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const donations_service_1 = require("./donations.service");
 const donations_constant_1 = require("./donations.constant");
-// import { CategoryService } from './category.service';
-// import { ICategory } from './category.interface';
-// import { categoryFilterableFields } from './category.constant';
 const createDonation = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = __rest(req.body, []);
     const result = yield donations_service_1.DonationsService.createDonation(data);

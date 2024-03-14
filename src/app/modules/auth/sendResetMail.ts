@@ -15,7 +15,7 @@ export async function sendEmail(to: string, html: string) {
   await transporter.sendMail({
     from: config.email, // sender address
     to, // list of receivers
-    subject: 'Reset Password Link', // Subject line
+    subject: 'Please Check', // Subject line
     html, // html body
   });
 }

@@ -3,10 +3,6 @@ import { DonationsController } from './donations.controller';
 //import { ENUM_USER_ROLE } from '../../../enums/user';
 //import auth from '../../middlewares/auth';
 //import validateRequest from '../../middlewares/validateRequest';
-// import { CategoryController } from './category.controller';
-// import { CategoryValidation } from './category.validation';
-// import { ServiceController } from './service.controller';
-// import { ServiceValidation } from './service.validation';
 
 const router = express.Router();
 router.post(

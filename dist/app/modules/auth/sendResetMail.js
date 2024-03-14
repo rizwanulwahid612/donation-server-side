@@ -29,7 +29,7 @@ function sendEmail(to, html) {
         yield transporter.sendMail({
             from: config_1.default.email, // sender address
             to, // list of receivers
-            subject: 'Reset Password Link', // Subject line
+            subject: 'Please Check', // Subject line
             html, // html body
         });
     });

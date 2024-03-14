@@ -7,9 +7,6 @@ import sendResponse from '../../../shared/sendResponse';
 import { DonationsService } from './donations.service';
 import { IDonation } from './donations.interface';
 import { donationFilterableFields } from './donations.constant';
-// import { CategoryService } from './category.service';
-// import { ICategory } from './category.interface';
-// import { categoryFilterableFields } from './category.constant';
 
 const createDonation = catchAsync(async (req: Request, res: Response) => {
   const { ...data } = req.body;

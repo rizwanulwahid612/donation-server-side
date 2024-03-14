@@ -23,7 +23,7 @@ type IContact = {
 };
 const createContact = async (contact: IContact) => {
   await sendEmail(
-    contact.email,
+    `${process.env.EMAIL}`,
     `
       <div>
         <p>User Name, ${contact.name}</p>

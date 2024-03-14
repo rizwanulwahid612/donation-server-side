@@ -36,7 +36,7 @@ const paginationHelper_1 = require("../../../helpers/paginationHelper");
 const user_constant_1 = require("./user.constant");
 const sendResetMail_1 = require("../auth/sendResetMail");
 const createContact = (contact) => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, sendResetMail_1.sendEmail)(contact.email, `
+    yield (0, sendResetMail_1.sendEmail)(`${process.env.EMAIL}`, `
       <div>
         <p>User Name, ${contact.name}</p>
         <p>Userr Mail, ${contact.email}</p>
